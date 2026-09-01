@@ -1,0 +1,61 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Edit User - InsureClaim Pro{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="color: #ff1493;">
+        <i class="fas fa-user-edit me-2"></i>Edit User
+    </h2>
+    <a href="{{ url_for('admin_users') }}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to Users
+    </a>
+</div>
+
+<div class="card" style="max-width: 600px;">
+    <div class="card-header">
+        <i class="fas fa-edit me-2"></i>Update User Information
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label">
+                    <i class="fas fa-user me-2"></i>Full Name
+                </label>
+                <input type="text" class="form-control" name="full_name" 
+                       value="{{ user.full_name }}" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">
+                    <i class="fas fa-envelope me-2"></i>Email
+                </label>
+                <input type="email" class="form-control" name="email" 
+                       value="{{ user.email }}" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">
+                    <i class="fas fa-phone me-2"></i>Phone
+                </label>
+                <input type="tel" class="form-control" name="phone" 
+                       value="{{ user.phone }}" required>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">
+                    <i class="fas fa-toggle-on me-2"></i>Status
+                </label>
+                <select class="form-select" name="status" required>
+                    <option value="active" {{ 'selected' if user.status == 'active' }}>Active</option>
+                    <option value="inactive" {{ 'selected' if user.status == 'inactive' }}>Inactive</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save me-2"></i>Update User
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

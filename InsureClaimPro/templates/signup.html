@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up - InsureClaim Pro{% endblock %}
+
+{% block content %}
+<i class="fas fa-shield-alt decorative-shape shape-1"></i>
+<i class="fas fa-user-plus decorative-shape shape-2"></i>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-shield-alt me-2"></i>InsureClaim Pro
+        </a>
+    </div>
+</nav>
+
+<div class="container py-5">
+    <div class="login-card" style="max-width: 600px;">
+        <div class="icon-box">
+            <i class="fas fa-user-plus"></i>
+        </div>
+        <h2><i class="fas fa-clipboard-list me-2"></i>Create Account</h2>
+        
+        <form method="POST" action="{{ url_for('signup') }}">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        <i class="fas fa-user me-2"></i>Username
+                    </label>
+                    <input type="text" class="form-control" name="username" required 
+                           placeholder="Choose a username">
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        <i class="fas fa-envelope me-2"></i>Email
+                    </label>
+                    <input type="email" class="form-control" name="email" required 
+                           placeholder="Your email address">
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">
+                    <i class="fas fa-user-circle me-2"></i>Full Name
+                </label>
+                <input type="text" class="form-control" name="full_name" required 
+                       placeholder="Your full name">
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        <i class="fas fa-phone me-2"></i>Phone
+                    </label>
+                    <input type="tel" class="form-control" name="phone" required 
+                           placeholder="Your phone number">
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        <i class="fas fa-user-tag me-2"></i>Role
+                    </label>
+                    <select class="form-select" name="role" required>
+                        <option value="">Select Role</option>
+                        <option value="admin">Administrator</option>
+                        <option value="authority">Insurance Authority</option>
+                        <option value="client">Client</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label">
+                    <i class="fas fa-map-marker-alt me-2"></i>Address
+                </label>
+                <textarea class="form-control" name="address" rows="2" required 
+                          placeholder="Your full address"></textarea>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        <i class="fas fa-lock me-2"></i>Password
+                    </label>
+                    <input type="password" class="form-control" name="password" required 
+                           placeholder="Choose a password">
+                </div>
+                
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">
+                        <i class="fas fa-lock me-2"></i>Confirm Password
+                    </label>
+                    <input type="password" class="form-control" name="confirm_password" required 
+                           placeholder="Confirm password">
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100 mb-3">
+                <i class="fas fa-user-plus me-2"></i>Create Account
+            </button>
+            
+            <p class="text-center mb-0">
+                Already have an account? 
+                <a href="{{ url_for('login') }}" style="color: #ff1493;">Login</a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

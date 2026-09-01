@@ -1,0 +1,154 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Data Analytics - InsureClaim Pro{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="color: #ff1493;">
+        <i class="fas fa-chart-pie me-2"></i>Data Analytics
+    </h2>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-chart-pie me-2"></i>Claims by Type
+            </div>
+            <div class="card-body">
+                <canvas id="claimTypesChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-chart-line me-2"></i>Monthly Claims Trend
+            </div>
+            <div class="card-body">
+                <canvas id="monthlyClaimsChart" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4 mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-list me-2"></i>Claim Types Distribution
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Claim Type</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for type, count in claim_types.items() %}
+                        <tr>
+                            <td>
+                                <i class="fas fa-tag me-2" style="color: #ff69b4;"></i>
+                                {{ type }}
+                            </td>
+                            <td><span class="badge bg-primary">{{ count }}</span></td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="2" class="text-center text-muted">No data available</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-calendar-alt me-2"></i>Monthly Overview
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Claims</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for month, count in monthly_claims.items() %}
+                        <tr>
+                            <td>
+                                <i class="fas fa-calendar me-2" style="color: #ff69b4;"></i>
+                                {{ month }}
+                            </td>
+                            <td><span class="badge bg-success">{{ count }}</span></td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="2" class="text-center text-muted">No data available</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    var claimTypes = {{ claim_types|tojson|safe }};
+    var monthlyData = {{ monthly_claims|tojson|safe }};
+    
+    var ctx1 = document.getElementById('claimTypesChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(claimTypes),
+            datasets: [{
+                data: Object.values(claimTypes),
+                backgroundColor: ['#ff69b4', '#ff1493', '#ffb6c1', '#ffe4ec', '#dc3545', '#28a745']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+    
+    var ctx2 = document.getElementById('monthlyClaimsChart').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(monthlyData),
+            datasets: [{
+                label: 'Claims',
+                data: Object.values(monthlyData),
+                backgroundColor: '#ff69b4',
+                borderColor: '#ff1493',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

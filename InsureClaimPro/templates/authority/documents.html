@@ -1,0 +1,61 @@
+{% extends 'authority/base.html' %}
+
+{% block title %}Document Review - InsureClaim Pro{% endblock %}
+
+{% block authority_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="color: #ff1493;">
+        <i class="fas fa-file-alt me-2"></i>Document Review
+    </h2>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-folder-open me-2"></i>Uploaded Documents
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-file me-2"></i>Filename</th>
+                        <th><i class="fas fa-user me-2"></i>Uploaded By</th>
+                        <th><i class="fas fa-align-left me-2"></i>Description</th>
+                        <th><i class="fas fa-calendar me-2"></i>Date</th>
+                        <th><i class="fas fa-lock me-2"></i>Encryption</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files %}
+                    <tr>
+                        <td>
+                            <i class="fas fa-file-alt me-2" style="color: #ff69b4;"></i>
+                            {{ file.original_filename }}
+                        </td>
+                        <td>{{ file.uploader_name }}</td>
+                        <td>{{ file.description or 'No description' }}</td>
+                        <td>{{ file.created_at[:10] if file.created_at else 'N/A' }}</td>
+                        <td>
+                            {% if file.encrypted_filename %}
+                                <span class="encrypted-badge">
+                                    <i class="fas fa-lock me-1"></i>Encrypted
+                                </span>
+                            {% else %}
+                                <span class="badge bg-secondary">Plain</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4">
+                            <i class="fas fa-folder-open" style="font-size: 3rem; color: #ccc;"></i>
+                            <p class="mt-2 text-muted">No documents uploaded yet</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

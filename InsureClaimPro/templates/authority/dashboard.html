@@ -1,0 +1,91 @@
+{% extends 'authority/base.html' %}
+
+{% block title %}Authority Dashboard - InsureClaim Pro{% endblock %}
+
+{% block authority_content %}
+<div class="welcome-banner">
+    <i class="fas fa-building insurance-icon"></i>
+    <h2><i class="fas fa-tachometer-alt me-2"></i>Insurance Authority Dashboard</h2>
+    <p class="mb-0">Welcome back, {{ session.get('full_name') }}! Review and process claims securely.</p>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <i class="fas fa-clock"></i>
+            <h3>{{ pending_claims }}</h3>
+            <p>Pending Claims</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <i class="fas fa-search"></i>
+            <h3>{{ under_review }}</h3>
+            <p>Under Review</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <i class="fas fa-check-circle"></i>
+            <h3>{{ approved }}</h3>
+            <p>Approved</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <i class="fas fa-file-archive"></i>
+            <h3>{{ total_files }}</h3>
+            <p>Encrypted Files</p>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-bolt me-2"></i>Quick Actions
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <a href="{{ url_for('authority_verification') }}" class="btn btn-primary w-100">
+                            <i class="fas fa-clipboard-check me-2"></i>Verify Claims
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="{{ url_for('authority_documents') }}" class="btn btn-info w-100">
+                            <i class="fas fa-file-alt me-2"></i>Review Docs
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="{{ url_for('authority_files') }}" class="btn btn-success w-100">
+                            <i class="fas fa-lock me-2"></i>Encrypt Files
+                        </a>
+                    </div>
+                    <div class="col-6">
+                        <a href="{{ url_for('authority_communication') }}" class="btn btn-warning w-100">
+                            <i class="fas fa-comments me-2"></i>Messages
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-key me-2"></i>Encryption Status
+            </div>
+            <div class="card-body">
+                <div class="crypto-info">
+                    <i class="fas fa-lock d-block mb-2" style="font-size: 2rem;"></i>
+                    <h5>Rail Fence Cipher Active</h5>
+                    <p class="mb-0">All files are encrypted with 3-rail configuration before transfer to clients.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - InsureClaim Pro{% endblock %}
+
+{% block content %}
+<i class="fas fa-shield-alt decorative-shape shape-1"></i>
+<i class="fas fa-lock decorative-shape shape-2"></i>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-shield-alt me-2"></i>InsureClaim Pro
+        </a>
+    </div>
+</nav>
+
+<div class="auth-container">
+    <div class="login-card">
+        <div class="icon-box">
+            <i class="fas fa-sign-in-alt"></i>
+        </div>
+        <h2><i class="fas fa-user-lock me-2"></i>Login</h2>
+        
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="mb-4">
+                <label class="form-label">
+                    <i class="fas fa-user me-2"></i>Username
+                </label>
+                <input type="text" class="form-control" name="username" required 
+                       placeholder="Enter your username">
+            </div>
+            
+            <div class="mb-4">
+                <label class="form-label">
+                    <i class="fas fa-lock me-2"></i>Password
+                </label>
+                <input type="password" class="form-control" name="password" required 
+                       placeholder="Enter your password">
+            </div>
+            
+            <button type="submit" class="btn btn-primary w-100 mb-3">
+                <i class="fas fa-sign-in-alt me-2"></i>Login
+            </button>
+            
+            <p class="text-center mb-0">
+                Don't have an account? 
+                <a href="{{ url_for('signup') }}" style="color: #ff1493;">Sign Up</a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

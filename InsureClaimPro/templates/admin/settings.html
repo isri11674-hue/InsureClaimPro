@@ -1,0 +1,103 @@
+{% extends 'admin/base.html' %}
+
+{% block title %}Settings - InsureClaim Pro{% endblock %}
+
+{% block admin_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="color: #ff1493;">
+        <i class="fas fa-cog me-2"></i>System Settings
+    </h2>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-sliders-h me-2"></i>Configuration
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-building me-2"></i>Company Name
+                        </label>
+                        <input type="text" class="form-control" name="company_name" 
+                               value="{{ settings.company_name if settings else 'InsureClaim Pro' }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-envelope me-2"></i>Contact Email
+                        </label>
+                        <input type="email" class="form-control" name="contact_email" 
+                               value="{{ settings.contact_email if settings else '' }}"
+                               placeholder="support@example.com">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-dollar-sign me-2"></i>Maximum Claim Amount
+                        </label>
+                        <input type="number" class="form-control" name="max_claim_amount" 
+                               value="{{ settings.max_claim_amount if settings else '100000' }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-check-double me-2"></i>Auto-Approve Threshold
+                        </label>
+                        <input type="number" class="form-control" name="auto_approve_threshold" 
+                               value="{{ settings.auto_approve_threshold if settings else '1000' }}"
+                               placeholder="Claims below this amount may be auto-approved">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Save Settings
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-info-circle me-2"></i>System Info
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <i class="fas fa-code me-2" style="color: #ff69b4;"></i>
+                        <strong>Framework:</strong> Flask
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-database me-2" style="color: #ff69b4;"></i>
+                        <strong>Database:</strong> TinyDB
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-lock me-2" style="color: #ff69b4;"></i>
+                        <strong>Encryption:</strong> Rail Fence (3 Rails)
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-key me-2" style="color: #ff69b4;"></i>
+                        <strong>Password:</strong> Werkzeug Hash
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header bg-purple text-white" style="background: linear-gradient(90deg, #6f42c1, #9b59b6);">
+                <i class="fas fa-key me-2"></i>Encryption Info
+            </div>
+            <div class="card-body">
+                <p class="mb-2"><strong>Algorithm:</strong> Rail Fence Cipher</p>
+                <p class="mb-2"><strong>Rails:</strong> 3</p>
+                <p class="mb-0 text-muted small">
+                    Files are encoded in Base64 before encryption for binary support.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

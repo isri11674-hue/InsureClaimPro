@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3 col-lg-2">
+        <div class="sidebar">
+            <h5 class="mb-4" style="color: #ff1493;">
+                <i class="fas fa-building me-2"></i>Authority Panel
+            </h5>
+            <nav class="nav flex-column">
+                <a class="nav-link {{ 'active' if request.endpoint == 'authority_dashboard' }}" href="{{ url_for('authority_dashboard') }}">
+                    <i class="fas fa-tachometer-alt"></i>Dashboard
+                </a>
+                <a class="nav-link {{ 'active' if request.endpoint == 'authority_verification' }}" href="{{ url_for('authority_verification') }}">
+                    <i class="fas fa-clipboard-check"></i>Claim Verification
+                </a>
+                <a class="nav-link {{ 'active' if request.endpoint == 'authority_documents' }}" href="{{ url_for('authority_documents') }}">
+                    <i class="fas fa-file-alt"></i>Document Review
+                </a>
+                <a class="nav-link {{ 'active' if request.endpoint == 'authority_approval' }}" href="{{ url_for('authority_approval') }}">
+                    <i class="fas fa-check-double"></i>Approval Management
+                </a>
+                <a class="nav-link {{ 'active' if request.endpoint == 'authority_files' }}" href="{{ url_for('authority_files') }}">
+                    <i class="fas fa-lock"></i>Encrypted Files
+                </a>
+                <a class="nav-link {{ 'active' if request.endpoint == 'authority_communication' }}" href="{{ url_for('authority_communication') }}">
+                    <i class="fas fa-comments"></i>Communication
+                </a>
+            </nav>
+        </div>
+    </div>
+    <div class="col-md-9 col-lg-10 py-4 px-4">
+        {% block authority_content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

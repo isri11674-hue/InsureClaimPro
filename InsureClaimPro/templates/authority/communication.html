@@ -1,0 +1,154 @@
+{% extends 'authority/base.html' %}
+
+{% block title %}Communication Center - InsureClaim Pro{% endblock %}
+
+{% block authority_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="color: #ff1493;">
+        <i class="fas fa-comments me-2"></i>Communication Center
+    </h2>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-5">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-paper-plane me-2"></i>Send Message
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-user me-2"></i>Recipient
+                        </label>
+                        <select class="form-select" name="recipient_id" required>
+                            <option value="">Select recipient...</option>
+                            {% for user in users %}
+                            {% if user.id != session.get('user_id') %}
+                            <option value="{{ user.id }}">{{ user.full_name }} ({{ user.role|title }})</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-heading me-2"></i>Subject
+                        </label>
+                        <input type="text" class="form-control" name="subject" required 
+                               placeholder="Message subject...">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-align-left me-2"></i>Message
+                        </label>
+                        <textarea class="form-control" name="message" rows="4" required 
+                                  placeholder="Type your message..."></textarea>
+                    </div>
+                    
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" name="encrypt" id="encryptCheck">
+                        <label class="form-check-label" for="encryptCheck">
+                            <i class="fas fa-lock me-1"></i>Encrypt message with Rail Fence Cipher
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-paper-plane me-2"></i>Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-7">
+        <ul class="nav nav-tabs mb-3" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#received">
+                    <i class="fas fa-inbox me-1"></i>Received
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#sent">
+                    <i class="fas fa-paper-plane me-1"></i>Sent
+                </a>
+            </li>
+        </ul>
+        
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="received">
+                {% for msg in received_messages %}
+                <div class="message-card {{ 'encrypted' if msg.is_encrypted }}">
+                    <div class="d-flex justify-content-between">
+                        <span class="sender">{{ msg.sender_name }}</span>
+                        <span class="date">{{ msg.created_at[:16] if msg.created_at else '' }}</span>
+                    </div>
+                    <h6 class="mt-2">{{ msg.subject }}</h6>
+                    {% if msg.is_encrypted %}
+                    <p class="text-muted mb-2">
+                        <i class="fas fa-lock me-1"></i>
+                        <em>Encrypted message</em>
+                    </p>
+                    <button class="btn btn-sm btn-outline-primary decrypt-btn" data-id="{{ msg.id }}">
+                        <i class="fas fa-unlock me-1"></i>Decrypt
+                    </button>
+                    <div class="decrypted-content mt-2" style="display: none;"></div>
+                    {% else %}
+                    <p class="mb-0">{{ msg.message }}</p>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-inbox" style="font-size: 3rem; color: #ccc;"></i>
+                    <p class="text-muted mt-2">No messages received</p>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="tab-pane fade" id="sent">
+                {% for msg in sent_messages %}
+                <div class="message-card {{ 'encrypted' if msg.is_encrypted }}">
+                    <div class="d-flex justify-content-between">
+                        <span class="sender">To: {{ msg.recipient_name }}</span>
+                        <span class="date">{{ msg.created_at[:16] if msg.created_at else '' }}</span>
+                    </div>
+                    <h6 class="mt-2">{{ msg.subject }}</h6>
+                    {% if msg.is_encrypted %}
+                    <span class="encrypted-badge">
+                        <i class="fas fa-lock me-1"></i>Encrypted
+                    </span>
+                    {% else %}
+                    <p class="mb-0">{{ msg.message }}</p>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-paper-plane" style="font-size: 3rem; color: #ccc;"></i>
+                    <p class="text-muted mt-2">No messages sent</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.querySelectorAll('.decrypt-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const msgId = this.dataset.id;
+        fetch('/message/decrypt/' + msgId)
+            .then(res => res.json())
+            .then(data => {
+                const container = this.nextElementSibling;
+                container.innerHTML = '<p class="mb-0 mt-2 p-2 bg-light rounded">' + data.decrypted + '</p>';
+                container.style.display = 'block';
+                this.style.display = 'none';
+            });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends 'authority/base.html' %}
+
+{% block title %}Encrypted Files - InsureClaim Pro{% endblock %}
+
+{% block authority_content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 style="color: #ff1493;">
+        <i class="fas fa-lock me-2"></i>Encrypted File Transfer
+    </h2>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-upload me-2"></i>Upload & Encrypt File
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="file-card mb-3">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #ff69b4;"></i>
+                        <p class="mt-2 mb-0">Select a file to encrypt and send</p>
+                        <input type="file" class="form-control mt-3" name="file" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-user me-2"></i>Select Recipient (Client)
+                        </label>
+                        <select class="form-select" name="recipient_id" required>
+                            <option value="">Choose a client...</option>
+                            {% for client in clients %}
+                            <option value="{{ client.id }}">{{ client.full_name }} ({{ client.email }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">
+                            <i class="fas fa-align-left me-2"></i>Description
+                        </label>
+                        <textarea class="form-control" name="description" rows="2" 
+                                  placeholder="Brief description of the file..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-lock me-2"></i>Encrypt & Upload
+                    </button>
+                </form>
+                
+                <div class="crypto-info mt-4">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Encryption Info:</strong> Files are encrypted using Rail Fence Cipher with 3 rails. 
+                    Binary files are Base64 encoded before encryption.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-file-archive me-2"></i>Uploaded Encrypted Files
+            </div>
+            <div class="card-body">
+                {% for file in files %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h6>
+                                    <i class="fas fa-file-alt me-2" style="color: #ff69b4;"></i>
+                                    {{ file.original_filename }}
+                                </h6>
+                                <p class="mb-1 small text-muted">{{ file.description or 'No description' }}</p>
+                                <p class="mb-0 small">
+                                    <i class="fas fa-calendar me-1"></i>
+                                    {{ file.created_at[:10] if file.created_at else 'N/A' }}
+                                </p>
+                            </div>
+                            <div>
+                                <span class="encrypted-badge mb-2 d-block">
+                                    <i class="fas fa-lock me-1"></i>Encrypted
+                                </span>
+                                <a href="{{ url_for('authority_download_encrypted', file_id=file.id) }}" 
+                                   class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-download me-1"></i>Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-folder-open" style="font-size: 3rem; color: #ccc;"></i>
+                    <p class="text-muted mt-2">No encrypted files yet</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

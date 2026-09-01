@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+
+{% block title %}InsureClaim Pro - Home{% endblock %}
+
+{% block content %}
+<i class="fas fa-shield-alt decorative-shape shape-1"></i>
+<i class="fas fa-file-invoice decorative-shape shape-2"></i>
+<i class="fas fa-lock decorative-shape shape-3"></i>
+
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <i class="fas fa-shield-alt me-2"></i>InsureClaim Pro
+        </a>
+        <div class="ms-auto">
+            <a href="{{ url_for('login') }}" class="btn btn-light me-2">
+                <i class="fas fa-sign-in-alt me-1"></i>Login
+            </a>
+            <a href="{{ url_for('signup') }}" class="btn btn-outline-light">
+                <i class="fas fa-user-plus me-1"></i>Sign Up
+            </a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <section class="hero-section">
+        <div class="mb-4">
+            <i class="fas fa-hospital-user" style="font-size: 6rem; color: #ff69b4;"></i>
+        </div>
+        <h1>Insurance Claim Management System</h1>
+        <p class="lead mb-4">Submit, Verify, and Track Your Insurance Claims Securely</p>
+        <p class="mb-5">
+            <i class="fas fa-lock me-2"></i>Protected with Rail Fence Cryptography for Maximum Security
+        </p>
+        <a href="{{ url_for('signup') }}" class="btn btn-primary btn-lg px-5">
+            <i class="fas fa-rocket me-2"></i>Get Started
+        </a>
+    </section>
+
+    <section class="py-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card text-center p-4 h-100">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h4>Administrator</h4>
+                    <p class="text-muted">Manage users, oversee claims, generate reports, and configure system settings</p>
+                    <ul class="list-unstyled text-start mt-3">
+                        <li><i class="fas fa-check text-success me-2"></i>User Management</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Claims Overview</li>
+                        <li><i class="fas fa-check text-success me-2"></i>System Reports</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Data Analytics</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Settings</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center p-4 h-100">
+                    <div class="feature-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h4>Insurance Authority</h4>
+                    <p class="text-muted">Verify claims, review documents, approve/reject, and securely share files</p>
+                    <ul class="list-unstyled text-start mt-3">
+                        <li><i class="fas fa-check text-success me-2"></i>Claim Verification</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Document Review</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Approval Management</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Encrypted File Transfer</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Communication Center</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center p-4 h-100">
+                    <div class="feature-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h4>Client</h4>
+                    <p class="text-muted">Submit claims, upload documents, track status, and download secure files</p>
+                    <ul class="list-unstyled text-start mt-3">
+                        <li><i class="fas fa-check text-success me-2"></i>Claim Submission</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Document Upload</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Status Tracking</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Encrypted File Download</li>
+                        <li><i class="fas fa-check text-success me-2"></i>Profile Management</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="crypto-info text-center">
+            <i class="fas fa-key d-block mb-3" style="font-size: 3rem;"></i>
+            <h3>Rail Fence Cryptography</h3>
+            <p class="mb-0">
+                All sensitive files and communications are encrypted using the Rail Fence cipher, 
+                ensuring secure data transfer between Insurance Authority and Clients.
+            </p>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <h2 class="text-center mb-5" style="color: #ff1493;">
+            <i class="fas fa-cogs me-2"></i>How It Works
+        </h2>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-user-plus"></i>
+                    <h5>1. Register</h5>
+                    <p>Create your account with role selection</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-file-alt"></i>
+                    <h5>2. Submit</h5>
+                    <p>File your insurance claim with documents</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-search"></i>
+                    <h5>3. Verify</h5>
+                    <p>Authority reviews and verifies claims</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h5>4. Settle</h5>
+                    <p>Get your claim approved and settled</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
