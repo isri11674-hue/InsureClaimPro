@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Claim Tracking</h1>
+
+    {% if claims %}
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Claim ID</th>
+                        <th>Claim Type</th>
+                        <th>Policy Number</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Submitted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for claim in claims %}
+                    <tr>
+                        <td>{{ claim.get('id', '—') }}</td>
+                        <td>{{ claim.get('claim_type', '—') }}</td>
+                        <td>{{ claim.get('policy_number', '—') }}</td>
+                        <td>{{ claim.get('claim_amount', '—') }}</td>
+                        <td>{{ claim.get('status', '—') }}</td>
+                        <td>{{ claim.get('created_at', '—') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>You have not submitted any claims yet.</p>
+    {% endif %}
+
+    <p>
+        <a href="{{ url_for('client_submit') }}">Submit Another Claim</a>
+        |
+        <a href="{{ url_for('client_dashboard') }}">Back to Dashboard</a>
+    </p>
+</div>
+{% endblock %}
