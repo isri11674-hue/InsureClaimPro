@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Client Dashboard</h1>
+    <p>Welcome! Here is a summary of your insurance claims.</p>
+
+    <div class="dashboard-cards">
+        <div class="dashboard-card">
+            <h3>Total Claims</h3>
+            <p>{{ total_claims }}</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Pending Claims</h3>
+            <p>{{ pending }}</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Approved Claims</h3>
+            <p>{{ approved }}</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Documents</h3>
+            <p>{{ files_count }}</p>
+        </div>
+
+        <div class="dashboard-card">
+            <h3>Unread Messages</h3>
+            <p>{{ unread_messages }}</p>
+        </div>
+    </div>
+
+    <p>
+        <a href="{{ url_for('client_submit') }}">Submit a New Claim</a>
+    </p>
+</div>
+{% endblock %}
