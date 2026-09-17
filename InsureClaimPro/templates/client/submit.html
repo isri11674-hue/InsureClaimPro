@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Submit a New Claim</h1>
+
+    <form method="POST" action="{{ url_for('client_submit') }}">
+        <label for="claim_type">Claim Type</label>
+        <input id="claim_type" name="claim_type" type="text" required>
+
+        <label for="policy_number">Policy Number</label>
+        <input id="policy_number" name="policy_number" type="text" required>
+
+        <label for="incident_date">Incident Date</label>
+        <input id="incident_date" name="incident_date" type="date" required>
+
+        <label for="claim_amount">Claim Amount</label>
+        <input id="claim_amount" name="claim_amount" type="number"
+               min="0" step="0.01" required>
+
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+
+        <button type="submit">Submit Claim</button>
+    </form>
+</div>
+{% endblock %}
